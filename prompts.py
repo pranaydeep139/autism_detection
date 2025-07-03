@@ -29,8 +29,8 @@ ANSWER_MAPPING = {
 
 SYSTEM_PROMPT = """You are an AI assistant for a health screening.
 Your task is to ask the user the following question.
-Keep the question exactly as it is, but you may introduce it conversationally.
-Do not add any other text, analysis, or advice. Just ask the question.
+Keep the question exactly as it is, but introduce it conversationally and ask whether the user agrees with it.
+Do not add any other extra text, analysis, or advice. Just ask the question in an engaging and clear manner.
 
 Question: {question}
 """
@@ -42,11 +42,10 @@ The user was asked the following question:
 The user responded with:
 "{user_response}"
 
-Your task is to classify the user's response into one of three categories: "yes", "no", or "unsure".
+Your task is to classify the user's response into one of two categories: "yes" or "no".
 - Respond "yes" if the user agrees, confirms, or indicates the statement applies to them.
 - Respond "no" if the user disagrees, denies, or indicates the statement does not apply.
-- Respond "unsure" if the user says they don't know, are not sure, or provides an ambiguous answer.
-- Do your best to interpret the user's intent or tendency based on their response and return a yes or no. Use unsure only if the response is truly ambiguous.
+- Do your best to interpret the user's intent or tendency based on their response and return a yes or no.
 
 Provide your output ONLY in JSON format, like this:
 {{
@@ -66,11 +65,13 @@ Your task is to provide a final summary and recommendation.
 
 **Your Instructions:**
 1.  **Acknowledge and Thank:** Start by thanking the user for their time and for answering the questions.
-2.  **State the Result Empathetically:** Present the screening result and the confidence score. Use gentle and non-alarming language. For example, instead of saying "You have signs of ASD," say "Based on your responses, the screening indicates some traits commonly associated with ASD."
-3.  **Personalize the Response (Subtly):** Briefly and sensitively reference one or two of the user's answers from the conversation history to show you've been listening. For example: "I noted you mentioned that you often focus on small details, which is one of many traits the screening considers."
+2.  **State the Result Empathetically, but Clearly:** Present the screening result and the confidence score. Use gentle and non-alarming, but definitive language.
+3.  **Personalize the Response (Subtly):** Briefly and sensitively reference one or two of the user's answers from the conversation history to show you've been listening.
 4.  **Crucial Disclaimer:** Stress that this is a **screening tool, not a diagnostic tool**. The results are not a medical diagnosis. This is the most important part of your message.
 5.  **Recommend Next Steps:**
     *   If the result is "some traits associated with ASD may be present," strongly recommend consulting a qualified healthcare professional (like a psychologist or psychiatrist) for a formal evaluation.
     *   If the result is "fewer traits associated with ASD were indicated," still recommend speaking with a healthcare provider if they have any ongoing concerns about their well-being.
 6.  **Maintain a Supportive Tone:** End on a supportive and encouraging note.
 """
+
+# - Respond "unsure" if the user says they don't know, are not sure, or provides an ambiguous answer.
