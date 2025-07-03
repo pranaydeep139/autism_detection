@@ -5,6 +5,7 @@ import uvicorn
 from typing import List, Dict, Optional
 import os
 import google.generativeai as genai
+from fastapi.middleware.cors import CORSMiddleware
 
 from graph import create_graph, QUESTIONS
 from prompts import FINAL_RESPONSE_PROMPT
@@ -15,6 +16,23 @@ app = FastAPI(
     description="An interactive chatbot to gather data for an ASD screening model.",
     version="1.0.0"
 )
+
+# Define the origins that are allowed to connect.
+# We'll allow our deployed Streamlit app and localhost for testing.
+origins = [
+    "https://*.streamlit.app", # Allows any deployed Streamlit app
+    "http://localhost",
+    "http://localhost:8501",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"], # Allows all methods (GET, POST, etc.)
+    allow_headers=["*"], # Allows all headers
+)
+
 graph_app = create_graph()
 nodes = graph_app.nodes
 
