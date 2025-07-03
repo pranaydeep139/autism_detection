@@ -15,7 +15,7 @@ load_dotenv()
 # --- LLM and State Definition ---
 # Configure the Gemini API
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-llm = genai.GenerativeModel('gemini-2.5-flash-lite')
+llm = genai.GenerativeModel('gemini-2.5-flash-lite-preview-06-17')
 
 class GraphState(TypedDict):
     initial_user_data: dict
