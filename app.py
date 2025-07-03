@@ -5,7 +5,7 @@ import json
 
 # --- Configuration ---
 # URL of your running FastAPI backend
-API_URL = "http://127.0.0.1:8000/turn"
+API_URL = "https://autism-detection-1-gxzu.onrender.com/turn"
 
 # Define the options for the dropdowns. These should match the data your model was trained on.
 # These values are derived from your notebook's analysis.
