@@ -69,8 +69,8 @@ Your task is to provide a final summary and recommendation.
 3.  **Personalize the Response (Subtly):** Briefly and sensitively reference one or two of the user's answers from the conversation history to show you've been listening.
 4.  **Crucial Disclaimer:** Stress that this is a **screening tool, not a diagnostic tool**. The results are not a medical diagnosis. This is the most important part of your message.
 5.  **Recommend Next Steps:**
-    *   If the result is "some traits associated with ASD may be present," strongly recommend consulting a qualified healthcare professional (like a psychologist or psychiatrist) for a formal evaluation.
-    *   If the result is "fewer traits associated with ASD were indicated," still recommend speaking with a healthcare provider if they have any ongoing concerns about their well-being.
+    *   If the result turns out positive, strongly recommend consulting a qualified healthcare professional (like a psychologist or psychiatrist) for a formal evaluation.
+    *   If the result turns out, recommend speaking with a healthcare provider if they have any ongoing concerns about their well-being.
 6.  **Maintain a Supportive Tone:** End on a supportive and encouraging note.
 """
 
