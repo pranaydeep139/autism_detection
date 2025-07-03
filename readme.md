@@ -131,8 +131,7 @@ The application uses a validated set of screening questions covering:
 ## 🤖 AI Components
 
 ### Natural Language Processing
-- **Google Gemini 2.5 Flash Lite**: Question presentation and response parsing
-- **Google Gemini 1.5 Flash**: Final result generation
+- **Google Gemini 2.5 Flash Lite**: Question presentation, response parsing and final result generation.
 
 ### Machine Learning
 - **SVM Model**: Binary classification for ASD trait prediction

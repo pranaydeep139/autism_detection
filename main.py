@@ -38,7 +38,7 @@ nodes = graph_app.nodes
 
 # Configure Gemini API for final response
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-final_response_model = genai.GenerativeModel('gemini-1.5-flash')
+final_response_model = genai.GenerativeModel('gemini-2.5-flash-lite-preview-06-17')
 
 # --- Pydantic Models for the API ---
 class InitialData(BaseModel):
