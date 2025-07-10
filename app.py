@@ -45,6 +45,11 @@ def main():
         st.session_state.messages = []
     if 'is_finished' not in st.session_state:
         st.session_state.is_finished = False
+    if 'prediction' not in st.session_state: # <<< NEW
+        st.session_state.prediction = None
+    if 'confidence' not in st.session_state: # <<< NEW
+        st.session_state.confidence = None
+
 
     # --- Section 1: Initial Data Collection Form ---
     if not st.session_state.screening_started:
@@ -96,6 +101,38 @@ def main():
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
+        # <<< NEW SECTION: Display final prediction slider if finished >>>
+        if st.session_state.is_finished:
+            st.markdown("---")
+            st.subheader("Screening Result Indicator")
+
+            if st.session_state.prediction is not None and st.session_state.confidence is not None:
+                prediction = st.session_state.prediction
+                confidence = st.session_state.confidence
+
+                # Calculate the probability of the positive class (ASD traits present)
+                # If prediction is 1 (Positive), prob_positive is the confidence.
+                # If prediction is 0 (Negative), prob_positive is 1 - confidence.
+                prob_positive = confidence if prediction == 1 else 1 - confidence
+                slider_value = int(prob_positive * 100)
+
+                # Use columns to create labels on either side of the slider
+                col1, col2, col3 = st.columns([2, 6, 2])
+                with col1:
+                    st.markdown("<p style='text-align: right; font-weight: bold;'>Negative</p>", unsafe_allow_html=True)
+                with col2:
+                    # The slider is disabled and its label is hidden for a cleaner look
+                    st.slider(
+                        "Result",
+                        min_value=0,
+                        max_value=100,
+                        value=slider_value,
+                        disabled=True,
+                        label_visibility="hidden"
+                    )
+                with col3:
+                    st.markdown("<p style='font-weight: bold;'>Positive</p>", unsafe_allow_html=True)
+
         # Get user input, but only if the conversation is not finished
         if not st.session_state.is_finished:
             if prompt := st.chat_input("Your answer..."):
@@ -121,15 +158,18 @@ def main():
                     # Update state and display AI's response
                     st.session_state.langgraph_state = data['state']
                     st.session_state.is_finished = data['is_finished']
+                    # <<< MODIFIED: Store prediction and confidence when finished >>>
+                    if st.session_state.is_finished:
+                        st.session_state.prediction = data.get('prediction')
+                        st.session_state.confidence = data.get('confidence')
+
 
                     with st.chat_message("assistant"):
                         st.markdown(data['ai_message'])
                     st.session_state.messages.append({"role": "assistant", "content": data['ai_message']})
 
-                    # If finished, we don't need to rerun, the chat input will be gone on next interaction
-                    # If not, rerun to clear the input box and wait for next message
-                    if not st.session_state.is_finished:
-                       st.rerun()
+                    # Rerun to update the UI (this will also show the slider if finished)
+                    st.rerun()
 
                 except requests.exceptions.RequestException as e:
                     st.error(f"An error occurred. Please try again. Error: {e}")
